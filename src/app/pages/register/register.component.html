@@ -1,0 +1,90 @@
+<section class="register overflow-hidden bg-dark">
+  <div class="card w-50 my-2 mx-auto">
+    <div class="card-body">
+      <div class="register__header row align-items-center mt-0">
+        <h1 class="register__head text-capitalize fw-bold col-6">
+          quiz register
+        </h1>
+        <img
+          class="col-6"
+          src="./assets/img/logo.png"
+          alt="image for register"
+        />
+      </div>
+      <!-- =================================================================== -->
+      <form
+        [formGroup]="registerForm"
+        (ngSubmit)="handleSubmit(name.value, email.value)"
+      >
+        <!-- ================== -->
+        <div class="form-floating mb-2">
+          <input
+            #name
+            formControlName="name"
+            type="text"
+            class="form-control fw-medium"
+            id="floatingInput"
+            placeholder="Name"
+          />
+          <label for="floatingInput">Name</label>
+        </div>
+        <!-- ================== -->
+        <div class="form-floating mb-2">
+          <input
+            #email
+            formControlName="email"
+            type="email"
+            class="form-control fw-medium"
+            id="floatingEmail"
+            placeholder="name@example.com"
+          />
+          <label for="floatingEmail">Email address</label>
+          <div id="emailHelp" class="form-text">
+            We'll never share your email with anyone else.
+          </div>
+          <!-- =========================== -->
+          <div
+            class="alert alert-danger"
+            *ngIf=" userData?.['email']?.invalid && userData?.['email']?.touched"
+          >
+            <div *ngIf="userData?.['email']?.errors?.['required']">
+              email is required
+            </div>
+            <div *ngIf="userData?.['email']?.invalid">invalid email</div>
+          </div>
+          <!-- =========================== -->
+        </div>
+        <!-- ================== -->
+        <div class="form-floating mb-2">
+          <input
+            formControlName="password"
+            type="password"
+            class="form-control fw-medium"
+            id="floatingPassword"
+            placeholder="Password"
+          />
+          <label for="floatingPassword">Password</label>
+          <!-- ========================== -->
+          <div
+            class="alert alert-danger"
+            *ngIf="userData?.['password']?.touched && userData?.['password']?.invalid"
+          >
+            <div *ngIf="userData?.['password']?.errors?.['required']">
+              password is required
+            </div>
+          </div>
+        </div>
+        <!-- ================== -->
+        <a  routerLink="../quiz">
+          <button
+            type="submit"
+            class="btn btn-dark fw-bold p-2 col-12"
+            [disabled]="!registerForm.valid"
+          >
+            Start
+          </button>
+        </a>
+      </form>
+    </div>
+  </div>
+</section>
