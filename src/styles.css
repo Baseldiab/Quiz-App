@@ -17,6 +17,7 @@ body {
 }
 .register {
   background-color: #000054 !important;
+  min-height: 100vh;
 }
 .btn-dark {
 }
