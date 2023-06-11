@@ -12,10 +12,7 @@
         />
       </div>
       <!-- =================================================================== -->
-      <form
-        [formGroup]="registerForm"
-        (ngSubmit)="handleSubmit(name.value, email.value)"
-      >
+      <form [formGroup]="registerForm">
         <!-- ================== -->
         <div class="form-floating mb-2">
           <input
@@ -75,11 +72,12 @@
           </div>
         </div>
         <!-- ================== -->
-        <a  routerLink="../quiz">
+        <a routerLink="../quiz">
           <button
             type="submit"
             class="btn btn-dark fw-bold p-2 col-12"
             [disabled]="!registerForm.valid"
+            (click)="handleSubmit(name.value, email.value)"
           >
             Start
           </button>
