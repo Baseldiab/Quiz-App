@@ -7,6 +7,7 @@ import { Observable } from 'rxjs';
 })
 export class GlobalService {
   questions: any[] = [];
+  answers: any[] = [];
   seconds!: number;
   qnProgress!: number;
   timer: any;
@@ -23,17 +24,13 @@ export class GlobalService {
   // ===============
   displayTimeElapsed() {
     return (
-      Math.floor(this.seconds / 3600) +
-      ':' +
-      Math.floor(this.seconds / 60) +
-      ':' +
-      Math.floor(this.seconds % 60)
+      '0' + Math.floor(this.seconds / 60) + ':' + Math.floor(this.seconds % 60)
     );
   }
   // ===============
   parti: any;
   getParticipantName() {
-    let parti = localStorage.getItem('participant');
+    this.parti = localStorage.getItem('participant');
 
     let participant = JSON.parse(this.parti);
     return participant.Name;
