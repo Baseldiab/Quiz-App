@@ -1,2 +1,45 @@
 <app-navbar></app-navbar>
-<p>result works!</p>
+<section class="result w-50 mx-auto">
+  <h1 class="mt-4">Compelted !</h1>
+  <div class="card mb-3 my-2 mx-auto">
+    <div class="row g-0">
+      <div class="col-md-4">
+        <img
+          src="./assets/img/trophy.png"
+          class="img-fluid rounded-start"
+          alt="trophy image"
+        />
+      </div>
+      <div class="col-md-8 position-relative my-auto">
+        <div class="card-body my-auto">
+          <h2 class="card-title">{{ this.global.name }}</h2>
+          <h3>
+            <span>{{ this.global.correctAnswerCount }}</span> / 10
+          </h3>
+          <h5>
+            Time Elapsed : <span>{{ this.global.displayTimeElapsed() }}</span>
+          </h5>
+          <div class="card-actions">
+            <button
+              type="button"
+              class="btn btn-dark mt-4 px-4 py-2"
+              (click)="onSubmit()"
+            >
+              Submit
+            </button>
+            <a
+              class="result__repeat-icon position-absolute top-100 start-100 translate-middle"
+              href="#"
+              routerLink="../quiz"
+            >
+              <i
+                class="fa-solid fa-repeat fa-2x bg-danger rounded-circle p-2 text-light"
+                (click)="restart()"
+              ></i>
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

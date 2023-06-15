@@ -9,32 +9,33 @@ import { GlobalService } from 'src/app/services/global.service';
   styleUrls: ['./quiz.component.css'],
 })
 export class QuizComponent {
-  constructor(public global: GlobalService, private router: Router) {
-    // add questions=============
-
-    let sec: any = localStorage.getItem('seconds');
-    let prog: any = localStorage.getItem('qnProgress');
-    let qns: any = localStorage.getItem('questions');
-    if (parseInt(sec) > 0) {
-      this.global.seconds = parseInt(sec);
-      this.global.qnProgress = parseInt(prog);
-      this.global.questions = JSON.parse(qns);
-
-      console.log(this.global.questions);
-      if (this.global.qnProgress == 10) {
+  constructor(public global: GlobalService, private router: Router) {}
+  // add questions=============
+  ngOnInit() {
+    if (parseInt(this.global.sec) > 0) {
+      this.global.seconds = parseInt(this.global.sec);
+      this.global.qnProgress = parseInt(this.global.prog);
+      this.global.questions = JSON.parse(this.global.qns);
+      // console.log(this.global.questions[this.global.qnProgress]);
+      // console.log(parseInt(this.global.prog));
+      // ===========================
+      this.getAnswersOptions(this.global.questions[this.global.qnProgress]);
+      if (this.global.qnProgress == 9) {
         this.router.navigate(['/result']);
+
+        // window.location.reload();
       } else {
         this.startTimer();
       }
+      // =================
     } else {
-      this.global.getQustions().subscribe((data: any) => {
-        this.global.seconds = 0;
-        this.global.qnProgress = 0;
-        this.global.correctAnswerCount = 0;
+      this.global.seconds = 0;
+      this.global.qnProgress = 0;
+      this.global.getQuestions().subscribe((data: any) => {
         localStorage.setItem('questions', JSON.stringify(data.results));
-        qns = localStorage.getItem('questions');
-        this.global.questions = JSON.parse(qns);
-        this.getAnswersOptions(this.global.questions[0]);
+        this.global.qns = localStorage.getItem('questions');
+        this.global.questions = JSON.parse(this.global.qns);
+        this.getAnswersOptions(this.global.questions[this.global.qnProgress]);
         //add answers =============
         // console.log(this.global.answers[0]);
 
@@ -42,6 +43,7 @@ export class QuizComponent {
       });
     }
   }
+
   // =============
   startTimer() {
     this.global.timer = setInterval(() => {
@@ -55,8 +57,8 @@ export class QuizComponent {
     let question: any[] = [];
     let correctAnswers: any[] = [];
     let inCorrectAnswers: any[] = [];
-    correctAnswers = data.correct_answer;
-    inCorrectAnswers = data.incorrect_answers;
+    correctAnswers = data?.correct_answer;
+    inCorrectAnswers = data?.incorrect_answers;
     this.global.answers = inCorrectAnswers;
     this.global.answers.splice(
       Math.floor(Math.random() * (inCorrectAnswers.length + 1)),
@@ -65,20 +67,26 @@ export class QuizComponent {
     );
   }
   // =============
-  answer(choice: any, i: any) {
-    if (this.global.qnProgress < 10) {
+  myChoices: any = [];
+  answer(choice: any[], i: any) {
+    if (this.global.qnProgress < 9) {
+      // make choice of the option
       choice = this.global.answers[i];
-      // localStorage.setItem('choice', JSON.stringify(choice));
-      localStorage.setItem('qns', JSON.stringify(this.global.questions));
+      this.myChoices.push(choice);
+      localStorage.setItem('choice', JSON.stringify(this.myChoices));
+      //========================================
       this.global.qnProgress++;
       localStorage.setItem('qnProgress', this.global.qnProgress.toString());
       let prog: any = localStorage.getItem('qnProgress');
       this.global.qnProgress = parseInt(prog);
+      // console.log(this.global.qnProgress);
       this.getAnswersOptions(this.global.questions[this.global.qnProgress]);
-    } else if (this.global.qnProgress == 10) {
+    } else if (parseInt(this.global.prog) == 9) {
       clearInterval(this.global.timer);
       this.router.navigate(['/result']);
     }
+    console.log(this.global.qnProgress);
   }
+
   // =============
 }

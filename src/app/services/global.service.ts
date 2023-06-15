@@ -6,17 +6,24 @@ import { Observable } from 'rxjs';
   providedIn: 'root',
 })
 export class GlobalService {
+  name: string = '';
   questions: any[] = [];
   answers: any[] = [];
   seconds!: number;
   qnProgress!: number;
   timer: any;
+  choices: any[] = [];
   correctAnswerCount: number = 0;
+  parti: any = localStorage.getItem('participant');
+  sec: any = localStorage.getItem('seconds');
+  prog: any = localStorage.getItem('qnProgress');
+  qns: any = localStorage.getItem('questions');
+  choic: any = localStorage.getItem('choice');
 
   constructor(private http: HttpClient) {}
   // ===============
 
-  getQustions(): Observable<any> {
+  getQuestions(): Observable<any> {
     return this.http.get(
       `https://opentdb.com/api.php?amount=10&category=21&difficulty=medium&type=multiple`
     );
@@ -28,10 +35,8 @@ export class GlobalService {
     );
   }
   // ===============
-  parti: any;
-  getParticipantName() {
-    this.parti = localStorage.getItem('participant');
 
+  getParticipantName() {
     let participant = JSON.parse(this.parti);
     return participant.Name;
   }
