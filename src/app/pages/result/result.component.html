@@ -1,7 +1,7 @@
 <app-navbar></app-navbar>
 <section class="result w-50 mx-auto">
-  <h1 class="mt-4">Compelted !</h1>
-  <div class="card mb-3 my-2 mx-auto">
+  <h1 class="fw-bold mt-4">Compelted !</h1>
+  <div class="card mb-5 mt-2 mx-auto">
     <div class="row g-0">
       <div class="col-md-4">
         <img
@@ -46,6 +46,26 @@
           </div>
         </div>
       </div>
+    </div>
+  </div>
+  <!-- ==========questions with correct answers========= -->
+  <h2 class="mt-5 fw-bold">Questions With Correct Answer</h2>
+  <div class="card row mx-auto mb-3 col-12 bg-dark">
+    <div
+      class="card-body text-start border-1 border-bottom border-secondary"
+      *ngFor="let item of this.global.questions; let i = index"
+    >
+      <h6 class="text-light">{{ i + 1 }}.</h6>
+      <h5 class="card-title my-4 text-light">
+        {{ item.question }}
+      </h5>
+
+      <h6
+        class="rounded-0 fw-medium text-start ps-4 py-3 border-bottom border-1 w-100 btn btn-light"
+        type="button"
+      >
+        {{ item.correct_answer }}
+      </h6>
     </div>
   </div>
 </section>
