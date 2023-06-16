@@ -31,7 +31,9 @@ export class GlobalService {
   // ===============
   displayTimeElapsed() {
     return (
-      '0' + Math.floor(this.seconds / 60) + ':' + Math.floor(this.seconds % 60)
+      ('0' + Math.floor(this.seconds / 60)).slice(-2) +
+      ':' +
+      ('0' + Math.floor(this.seconds % 60)).slice(-2)
     );
   }
   // ===============
@@ -41,5 +43,6 @@ export class GlobalService {
     return participant.Name;
   }
   // ===============
+
   // ===============
 }

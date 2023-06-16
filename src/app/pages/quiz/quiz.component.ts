@@ -11,19 +11,16 @@ import { GlobalService } from 'src/app/services/global.service';
 export class QuizComponent {
   constructor(public global: GlobalService, private router: Router) {}
   // add questions=============
+
   ngOnInit() {
     if (parseInt(this.global.sec) > 0) {
       this.global.seconds = parseInt(this.global.sec);
       this.global.qnProgress = parseInt(this.global.prog);
       this.global.questions = JSON.parse(this.global.qns);
-      // console.log(this.global.questions[this.global.qnProgress]);
-      // console.log(parseInt(this.global.prog));
       // ===========================
       this.getAnswersOptions(this.global.questions[this.global.qnProgress]);
-      if (this.global.qnProgress == 9) {
+      if (this.global.qnProgress == 10) {
         this.router.navigate(['/result']);
-
-        // window.location.reload();
       } else {
         this.startTimer();
       }
@@ -60,7 +57,7 @@ export class QuizComponent {
     correctAnswers = data?.correct_answer;
     inCorrectAnswers = data?.incorrect_answers;
     this.global.answers = inCorrectAnswers;
-    this.global.answers.splice(
+    this.global.answers?.splice(
       Math.floor(Math.random() * (inCorrectAnswers.length + 1)),
       0,
       correctAnswers
@@ -69,22 +66,22 @@ export class QuizComponent {
   // =============
   myChoices: any = [];
   answer(choice: any[], i: any) {
-    if (this.global.qnProgress < 9) {
-      // make choice of the option
-      choice = this.global.answers[i];
-      this.myChoices.push(choice);
-      localStorage.setItem('choice', JSON.stringify(this.myChoices));
-      //========================================
-      this.global.qnProgress++;
-      localStorage.setItem('qnProgress', this.global.qnProgress.toString());
-      let prog: any = localStorage.getItem('qnProgress');
-      this.global.qnProgress = parseInt(prog);
-      // console.log(this.global.qnProgress);
-      this.getAnswersOptions(this.global.questions[this.global.qnProgress]);
-    } else if (parseInt(this.global.prog) == 9) {
+    // make choice of the option
+    choice = this.global.answers[i];
+    this.myChoices.push(choice);
+    localStorage.setItem('choice', JSON.stringify(this.myChoices));
+    //========================================
+    this.global.qnProgress++;
+    localStorage.setItem('qnProgress', this.global.qnProgress.toString());
+    if (this.global.qnProgress == 10) {
       clearInterval(this.global.timer);
+      window.location.reload();
       this.router.navigate(['/result']);
     }
+    let prog: any = localStorage.getItem('qnProgress');
+    this.global.qnProgress = parseInt(prog);
+    // console.log(parseInt(time));
+    this.getAnswersOptions(this.global.questions[this.global.qnProgress]);
     console.log(this.global.qnProgress);
   }
 

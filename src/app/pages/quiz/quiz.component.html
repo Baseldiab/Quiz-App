@@ -2,7 +2,7 @@
 <!-- ======================================= -->
 <div
   class="row container mx-auto"
-  *ngIf="this.global.questions && this.global.qnProgress != 10"
+  *ngIf="this.global.questions && this.global.qnProgress < 10"
 >
   <div class="row mx-auto px-0 mb-3">
     <div class="row mb-2">
@@ -32,14 +32,13 @@
   <div class="card row mx-auto mb-3 col-12 bg-dark">
     <div class="card-body text-start">
       <h6 class="text-light">{{ this.global.qnProgress + 1 }}</h6>
-
       <h5 class="card-title my-4 text-light">
         {{ this.global.questions[this.global.qnProgress]?.question }}
       </h5>
       <ul class="card-text mt-2 list-unstyled bg-light">
         <ng-container *ngFor="let option of this.global.answers; let i = index">
           <li
-            *ngIf="option != null"
+            *ngIf="option != null && this.global.qnProgress < 10"
             class="rounded-0 fw-medium text-start ps-4 py-3 border-bottom border-1 w-100 btn btn-light"
             type="button"
             (click)="answer(this.option[i], i)"
